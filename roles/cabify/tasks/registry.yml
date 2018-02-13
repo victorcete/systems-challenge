@@ -9,6 +9,10 @@
 - name: run docker-registry nomad job
   command:
     /usr/bin/nomad run -address http://{{ network_private_address }}:4646 {{ cabify_nomad_job_path }}/registry.nomad
+  register: job_succeeded
+  until: job_succeeded.rc == 0
+  retries: 6
+  delay: 10
   when: registry_redeploy.changed
 
 - name: wait for docker-registry to start up
