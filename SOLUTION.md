@@ -51,6 +51,9 @@ One last caveat, one every node where `nomad` is deployed, the process is runnin
 
 > Note that it is strongly recommended not to operate a node as both client and server, although this is supported to simplify development and testing
 
+##### Docker Registry
+The docker registry that is created via `nomad` job is also a SPOF. I didn't think it was worth the effort to set up any kind of shared storage to have more than 1 replica running, so this means that if the registry go down, we cannot deploy new versions of the app.
+
 #### Explain how would you upgrade the Cabify service without downtime
 
 The combination of using [nomad](https://www.nomadproject.io/) with [consul-template](https://github.com/hashicorp/consul-template) seemed like the right choice, considering we needed to deploy [consul](https://www.consul.io/).
