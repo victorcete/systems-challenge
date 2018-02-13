@@ -93,6 +93,17 @@ Using tags with `vagrant` is not natively supported, so you have to [do some wor
 
 #### Some examples
 
+#### Provision the whole cluster
+
+Just run `vagrant up`
+
+The order will be:
+
+1. worker-01
+2. worker-02
+3. worker-03
+4. proxy-01
+
 Ansible first and following runs on a worker node:
 
 ```
