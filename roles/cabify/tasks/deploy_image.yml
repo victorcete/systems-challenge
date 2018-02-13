@@ -1,0 +1,12 @@
+---
+
+- name: deploy cabify nomad job file
+  template:
+    src: nomad-jobs/cabify.nomad.j2
+    dest: "{{ cabify_nomad_job_path }}/cabify.nomad"
+  register: cabify_redeploy
+
+- name: run cabify nomad job
+  command:
+    /usr/bin/nomad run -address http://{{ network_private_address }}:4646 {{ cabify_nomad_job_path }}/cabify.nomad
+  when: cabify_redeploy.changed

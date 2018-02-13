@@ -1,0 +1,11 @@
+---
+
+common_package_list:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  # gnupg-curl: https://github.com/angstwad/docker.ubuntu/issues/178
+  # I was getting errors like `gpg: no handler for keyserver scheme `https'`
+  - gnupg-curl
+  - software-properties-common
+  - unzip

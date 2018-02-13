@@ -1,0 +1,57 @@
+job "cabify" {
+  datacenters = ["dc1"]
+  type = "service"
+
+  # defaults
+  update {
+    max_parallel = 2
+    min_healthy_time = "5s"
+    healthy_deadline = "3m"
+    auto_revert = false
+    canary = 0
+  }
+
+  # defaults
+  group "cabify" {
+    count = {{ cabify_nomad_job_count }}
+    
+    restart {
+      attempts = 10
+      interval = "5m"
+      delay = "25s"
+      mode = "delay"
+    }
+
+    task "cabify" {
+      driver = "docker"
+
+      config {
+        image = "{{ cabify_image_url }}:{{ cabify_image_tag }}"
+        port_map {
+          http = {{ cabify_image_port }}
+        }
+      }
+
+      resources {
+        cpu    = 128
+        memory = 32
+        network {
+          port "http" {}
+        }
+      }
+
+      service {
+        name = "cabify"
+        tags = ["cabify", "{{ cabify_image_tag }}"]
+        port = "http"
+        check {
+          name     = "alive"
+          type     = "http"
+          path     = "/status"
+          interval = "2s"
+          timeout  = "2s"
+        }
+      }
+    }
+  }
+}

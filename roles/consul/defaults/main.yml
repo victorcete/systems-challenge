@@ -1,13 +1,32 @@
 ---
-consul_version: 1.0.3
-consul_download_url: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
 
-consul_datacenter: cabify
-consul_encrypt: WNFe5zIjCIHFeJnqtrfdgw==
+consul_bin: "{{ consul_bin_dir }}/consul"
+consul_bin_dir: /usr/bin
 
-consul_config_dir: /etc/consul.d
-consul_data_dir: /var/lib/consul
-consul_install_dir: /opt/consul/bin
-consul_log_dir: /var/log/consul
+consul_bootstrap_servers: 2
 
-consul_binary: "{{ consul_install_dir }}/consul"
+consul_dir_config: /etc/consul
+consul_dir_data: /var/lib/consul
+consul_dir_log: /var/log/consul
+
+consul_dirs:
+  - "{{ consul_dir_config }}"
+  - "{{ consul_dir_data }}"
+  - "{{ consul_dir_log }}"
+
+consul_log_file: "{{ consul_dir_log }}/consul.log"
+
+consul_pkg_url: "https://releases.hashicorp.com/consul/{{ consul_pkg_version }}/consul_{{ consul_pkg_version }}_linux_amd64.zip"
+consul_pkg_version: 1.0.6
+
+consul_recursors:
+  - 8.8.8.8
+  - 8.8.4.4
+
+consul_servers:
+  - 192.168.33.10
+  - 192.168.33.11
+  - 192.168.33.12
+  - 192.168.33.100
+
+consul_upstart_file: /etc/init/consul.conf

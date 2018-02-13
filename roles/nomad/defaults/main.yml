@@ -1,0 +1,22 @@
+---
+nomad_agent_config: "{{ nomad_dir_config }}/config.hcl"
+nomad_bin: "{{ nomad_bin_dir }}/nomad"
+nomad_bin_dir: /usr/bin
+
+nomad_bootstrap_servers: 2
+
+nomad_dir_config: /etc/nomad
+nomad_dir_data: /var/lib/nomad
+nomad_dir_log: /var/log/nomad
+
+nomad_dirs:
+  - "{{ nomad_dir_config }}"
+  - "{{ nomad_dir_data }}"
+  - "{{ nomad_dir_log }}"
+
+nomad_log_file: "{{ nomad_dir_log }}/nomad.log"
+
+nomad_pkg_url: "https://releases.hashicorp.com/nomad/{{ nomad_pkg_version }}/nomad_{{ nomad_pkg_version }}_linux_amd64.zip"
+nomad_pkg_version: 0.7.1
+
+nomad_upstart_file: /etc/init/nomad.conf

@@ -1,0 +1,38 @@
+consul {
+  auth {
+    enabled = false
+  }
+
+  address = "127.0.0.1:8500"
+
+  retry {
+    enabled = true
+    attempts = 12
+    backoff = "250ms"
+    max_backoff = "1m"
+  }
+
+  ssl {
+    enabled = false
+  }
+}
+
+reload_signal = "SIGHUP"
+kill_signal = "SIGINT"
+max_stale = "10m"
+log_level = "info"
+
+wait {
+  min = "5s"
+  max = "10s"
+}
+
+template {
+  source = "{{ consul_template_dir_templates }}/haproxy.ctmpl"
+  destination = "/etc/haproxy/haproxy.cfg"
+  command = "sudo /etc/init.d/haproxy reload || true"
+  command_timeout = "60s"
+  perms = 0644
+  backup = true 
+  wait = "2s:6s"
+}

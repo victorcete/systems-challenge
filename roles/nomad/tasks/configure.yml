@@ -1,0 +1,15 @@
+---
+
+- name: generate agent configuration
+  template:
+    src: agent/config.hcl.j2
+    dest: "{{ nomad_agent_config }}"
+  notify:
+    - restart nomad
+
+- name: generate upstart configuration
+  template:
+    src: upstart/nomad.conf.j2
+    dest: "{{ nomad_upstart_file }}"
+  notify:
+    - restart nomad

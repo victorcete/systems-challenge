@@ -1,0 +1,15 @@
+---
+
+- name: download and extract binary
+  unarchive:
+    src: "{{ consul_template_pkg_url }}"
+    dest: "{{ consul_template_bin_dir }}"
+    remote_src: yes
+    creates: "{{ consul_template_bin }}"
+
+- name: create configuration and data directories
+  file:
+    name: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ consul_template_dirs }}"

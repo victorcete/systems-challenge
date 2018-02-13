@@ -1,0 +1,7 @@
+---
+
+- name: enable service
+  service:
+    name: consul-template
+    enabled: yes
+    state: started

@@ -1,0 +1,15 @@
+bind_addr = "{{ network_private_address }}"
+
+data_dir  = "{{ nomad_dir_data }}"
+
+log_level = "INFO"
+
+server {
+  enabled = true
+  bootstrap_expect = {{ nomad_bootstrap_servers }}
+}
+
+client {
+  enabled = true
+  network_interface = "eth1"
+}

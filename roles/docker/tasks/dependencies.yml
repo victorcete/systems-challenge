@@ -1,0 +1,7 @@
+---
+  
+- name: install dependencies
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - "{{ docker_apt_package_dependencies }}"

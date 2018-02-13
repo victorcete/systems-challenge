@@ -1,6 +1,7 @@
 ---
-- name: reload haproxy
+
+- name: restart haproxy
   service:
-    name: haproxy
-    state: reloaded
     enabled: yes
+    name: haproxy
+    state: restarted

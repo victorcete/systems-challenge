@@ -1,0 +1,23 @@
+---
+
+- name: add APT key
+  apt_key:
+    id: "{{ docker_gpg_keyserver_fingerprint }}"
+    keyserver: "{{ docker_gpg_keyserver }}"
+
+- name: add APT repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+
+- name: install package
+  apt:
+    name: "{{ docker_apt_package }}"
+
+- name: add insecure registry
+  lineinfile: 
+    dest: /etc/default/docker
+    regexp: '^#DOCKER_OPTS=.*$'
+    line: "DOCKER_OPTS=\"--insecure-registry {{ docker_insecure_registry_url }}\""
+    backrefs: yes
+  notify:
+    - restart docker

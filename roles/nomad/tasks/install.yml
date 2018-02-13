@@ -1,0 +1,15 @@
+---
+
+- name: download and extract binary
+  unarchive:
+    src: "{{ nomad_pkg_url }}"
+    dest: "{{ nomad_bin_dir }}"
+    remote_src: yes
+    creates: "{{ nomad_bin }}"
+
+- name: create configuration and data directories
+  file:
+    name: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ nomad_dirs }}"

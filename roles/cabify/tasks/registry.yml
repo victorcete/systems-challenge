@@ -1,0 +1,19 @@
+---
+
+- name: deploy docker-registry nomad job file
+  template:
+    src: nomad-jobs/registry.nomad.j2
+    dest: "{{ cabify_nomad_job_path }}/registry.nomad"
+  register: registry_redeploy
+
+- name: run docker-registry nomad job
+  command:
+    /usr/bin/nomad run -address http://{{ network_private_address }}:4646 {{ cabify_nomad_job_path }}/registry.nomad
+  when: registry_redeploy.changed
+
+- name: wait for docker-registry to start up
+  wait_for:
+    host: "{{ cabify_registry_image_host }}"
+    port: "{{ cabify_registry_image_port }}"
+    timeout: 60
+  when: registry_redeploy.changed

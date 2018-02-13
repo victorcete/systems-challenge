@@ -1,0 +1,8 @@
+FROM python:3-alpine
+
+RUN pip install bottle
+
+COPY ./cabify.py /
+
+EXPOSE {{ cabify_image_port }}
+ENTRYPOINT ["python", "/cabify.py"]

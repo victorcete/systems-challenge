@@ -1,0 +1,23 @@
+---
+
+- name: create build directory
+  file:
+    name: "{{ cabify_build_dir }}"
+    state: directory
+
+- name: deploy dockerfile and app
+  template:
+    src: "{{ item.orig }}"
+    dest: "{{ cabify_build_dir }}/{{ item.dest }}"
+  with_items:
+    - { orig: 'app/Dockerfile.j2', dest: 'Dockerfile' }
+    - { orig: 'app/cabify.py.j2', dest: 'cabify.py' }
+  register: deploy_cabify
+
+- name: build image
+  docker_image:
+    path: "{{ cabify_build_dir }}"
+    name: "{{ cabify_image_url }}"
+    tag: "{{ cabify_image_tag }}"
+    push: yes
+  when: deploy_cabify.changed

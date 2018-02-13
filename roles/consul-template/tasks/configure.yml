@@ -1,0 +1,22 @@
+---
+
+- name: deploy HAProxy template file
+  copy:
+    src: haproxy.ctmpl
+    dest: "{{ consul_template_dir_templates }}/haproxy.ctmpl"
+  notify:
+    - restart consul-template
+  
+- name: generate configuration
+  template:
+    src: consul-template/consul-template.cfg.j2
+    dest: "{{ consul_template_dir_config }}/consul-template.cfg"
+  notify:
+    - restart consul-template
+
+- name: generate upstart configuration
+  template:
+    src: upstart/consul-template.conf.j2
+    dest: "{{ consul_template_upstart_file }}"
+  notify:
+    - restart consul-template

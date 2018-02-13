@@ -1,0 +1,20 @@
+---
+
+consul_template_bin: "{{ consul_template_bin_dir }}/consul-template"
+consul_template_bin_dir: /usr/bin
+
+consul_template_dir_config: /var/lib/consul-template
+consul_template_dir_log: /var/log/consul-template
+consul_template_dir_templates: "{{ consul_template_dir_config }}/templates"
+
+consul_template_dirs:
+  - "{{ consul_template_dir_config }}"
+  - "{{ consul_template_dir_log }}"
+  - "{{ consul_template_dir_templates }}"
+
+consul_template_log_file: "{{ consul_template_dir_log }}/consul-template.log"
+
+consul_template_pkg_url: "https://releases.hashicorp.com/consul-template/{{ consul_template_pkg_version }}/consul-template_{{ consul_template_pkg_version }}_linux_amd64.zip"
+consul_template_pkg_version: 0.19.4
+
+consul_template_upstart_file: /etc/init/consul-template.conf

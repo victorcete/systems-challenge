@@ -1,0 +1,21 @@
+{
+  "bind_addr": "{{ network_private_address }}",
+  "bootstrap_expect": {{ consul_bootstrap_servers }},
+  "data_dir": "{{ consul_dir_data }}",
+  "log_level": "INFO",
+  "ports" : {
+    "dns" : 53
+  },
+  "recursors" : [
+{% set comma = joiner(",") %}
+{% for recursor in consul_recursors %}
+    "{{ recursor }}"{{ "," if not loop.last else "" }}
+{% endfor %}
+  ],
+  "retry_join": [
+{% for server in consul_servers %}
+    "{{ server }}"{{ "," if not loop.last else "" }}
+{% endfor %}
+  ],
+  "server": true
+}

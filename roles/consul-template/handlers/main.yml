@@ -1,0 +1,7 @@
+---
+
+- name: restart consul-template
+  service:
+    enabled: yes
+    name: consul-template
+    state: restarted

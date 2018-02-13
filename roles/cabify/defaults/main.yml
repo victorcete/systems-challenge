@@ -1,3 +1,14 @@
 ---
-cabify_bottle_version: 0.12.13
-cabify_path: /opt/cabify
+cabify_build_dir: /srv/cabify-build
+
+cabify_image_port: 8181
+cabify_image_url: "{{ cabify_registry_url }}/docker-cabify"
+cabify_image_tag: 0.0.1
+
+cabify_nomad_job_count: 6
+cabify_nomad_job_path: /var/lib/nomad
+
+cabify_registry_image: registry:2.6.2
+cabify_registry_image_host: registry.service.consul
+cabify_registry_image_port: 5000
+cabify_registry_url: registry.service.consul:5000

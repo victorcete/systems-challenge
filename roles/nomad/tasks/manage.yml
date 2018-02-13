@@ -1,6 +1,8 @@
 ---
-- name: Enable Cabify App service
+
+- name: enable service
   service:
-    name: cabify
+    name: nomad
     enabled: yes
     state: started
+  

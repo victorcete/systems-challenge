@@ -1,0 +1,12 @@
+description "Nomad agent"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+
+script
+  exec {{ nomad_bin }} agent \
+    -config {{ nomad_agent_config }} \
+    >> {{ nomad_log_file }} 2>&1
+end script

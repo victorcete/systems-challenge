@@ -1,19 +1,9 @@
 ---
 
-- name: Add vbernat/haproxy-{{ haproxy_release }} PPA repo
+- name: add APT repository
   apt_repository:
-    repo: "ppa:vbernat/haproxy-{{ haproxy_release }}"
-    update_cache: true
-
-- name: Prevent the installer from starting the HAProxy service
-  copy:
-    dest: /etc/init/haproxy.override
-    content: manual
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Install HAProxy
+    repo: ppa:vbernat/haproxy-1.8
+  
+- name: install package
   apt:
     name: haproxy
-    state: installed

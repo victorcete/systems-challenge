@@ -1,11 +1,22 @@
 ---
 
-- name: Copy Consul agent config
+- name: generate agent configuration
   template:
-    src: consul_agent.json.j2
-    dest: "{{ consul_config_dir }}/20-agent.json"
-    owner: root
-    group: root
-    mode: 0644
+    src: agent/consul.json.j2
+    dest: "{{ consul_dir_config }}/consul.json"
   notify:
     - restart consul
+
+- name: generate upstart configuration
+  template:
+    src: upstart/consul.conf.j2
+    dest: "{{ consul_upstart_file }}"
+  notify:
+    - restart consul
+
+- name: configure dns forwarding
+  lineinfile: 
+    dest: /etc/resolv.conf
+    regexp: '^nameserver (.*)$'
+    line: 'nameserver 127.0.0.1' 
+    backrefs: yes
